@@ -10,6 +10,7 @@ import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
 import { ArrowLeft, Share2, Printer, Plus, Minus, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
+import Image from 'next/image';
 
 interface Ingredient {
   id: string;
@@ -552,13 +553,37 @@ Note: Purchased items are non-refundable
   );
 }
 
-function InvoicePreview({ invoiceNumber, invoiceDate, customerName, customerAddress, activeItems, calculateTotal }) {
+interface InvoicePreviewProps {
+  invoiceNumber: string;
+  invoiceDate: string;
+  customerName: string;
+  customerAddress: string;
+  activeItems: InvoiceItem[];
+  calculateTotal: () => number;
+}
+
+function InvoicePreview({ 
+  invoiceNumber, 
+  invoiceDate, 
+  customerName, 
+  customerAddress, 
+  activeItems, 
+  calculateTotal 
+}: {
+  invoiceNumber: string;
+  invoiceDate: string;
+  customerName: string;
+  customerAddress: string;
+  activeItems: InvoiceItem[];
+  calculateTotal: () => number;
+}) {
   return (
     <div className="p-3 print:p-2 print:h-screen print:flex print:flex-col">
       {/* Header - Compact */}
       <div className="text-center relative mt-28 print:mt-0 font-bold print:mb-1">
         <div className="absolute -top-24 left-1/2 print:left-20 print:top-3 transform -translate-x-1/2 w-20 rounded-full h-20 border border-gray-300 rounded-full flex print:w-[120px] print:h-[120px] items-center justify-center mb-2 print:mb-1">   
-            <img className="w-full h-full rounded-full " src="/images/logo.png" alt="logo" />
+            <Image width={1000} height={1000} className="w-full h-full rounded-full " src="/images/logo.png" alt="logo" />
+           
         </div>
         <h1 className="text-base sm:text-xl font-bold text-blue-900 mt-14 sm:mt-20 print:mt-16 print:text-black print:text-lg">
           KH ផ្គត់ផ្គង់ភីហ្សា
