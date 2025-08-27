@@ -8,7 +8,7 @@ import { Card, CardContent, CardHeader, CardTitle } from '@/components/ui/card';
 import { Input } from '@/components/ui/input';
 import { Label } from '@/components/ui/label';
 import { Separator } from '@/components/ui/separator';
-import { ArrowLeft, Share2, Printer, Plus, Minus, Eye, EyeOff } from 'lucide-react';
+import { ArrowLeft, Printer, Plus, Minus, Eye, EyeOff } from 'lucide-react';
 import { toast } from 'sonner';
 import Image from 'next/image';
 
@@ -142,46 +142,6 @@ export default function Invoice() {
     }
   };
 
-  const handleShare = async () => {
-    const activeItems = invoiceItems.filter((item) => item.quantity > 0);
-    const invoiceText = `
-KH ផ្គត់ផ្គង់ភីហ្សា
-Invoice: ${invoiceNumber}
-Date: ${invoiceDate}
-Customer: ${customerName || 'N/A'}
-Address: ${customerAddress || 'N/A'}
-
-Items:
-${activeItems
-  .map(
-    (item, index) =>
-      `${index + 1}. ${item.name} - Qty: ${item.quantity} - Unit Price: ${item.unitPrice.toFixed(0)}៛ - Total: ${item.amount.toFixed(0)}៛`
-  )
-  .join('\n')}
-
-Total: ${calculateTotal().toFixed(0)}៛
-Contact: 098 828 128 | 086 828 128 | 071 828 128
-Note: Purchased items are non-refundable
-    `.trim();
-
-    if (navigator.share) {
-      try {
-        await navigator.share({
-          title: `Pizza Invoice ${invoiceNumber}`,
-          text: invoiceText,
-          url: window.location.href,
-        });
-        toast.success('Shared successfully!');
-      } catch (err) {
-        await navigator.clipboard.writeText(invoiceText);
-        toast.success('Invoice details copied to clipboard! Paste them in Messenger.');
-      }
-    } else {
-      await navigator.clipboard.writeText(invoiceText);
-      toast.success('Invoice details copied to clipboard! Paste them in Messenger.');
-    }
-  };
-
   const activeItems = invoiceItems.filter((item) => item.quantity > 0);
 
   return (
@@ -214,10 +174,6 @@ Note: Purchased items are non-refundable
                   className="lg:hidden p-2"
                 >
                   {showPreview ? <EyeOff className="w-4 h-4" /> : <Eye className="w-4 h-4" />}
-                </Button>
-                <Button onClick={handleShare} variant="outline" size="sm" className="p-2 sm:px-3">
-                  <Share2 className="w-4 h-4 sm:mr-2" />
-                  <span className="hidden sm:inline">Share</span>
                 </Button>
                 <Button onClick={handlePrint} size="sm" className="p-2 sm:px-3">
                   <Printer className="w-4 h-4 sm:mr-2" />
